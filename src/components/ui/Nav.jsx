@@ -52,10 +52,13 @@ function Nav() {
         </div>
 
         {userDetails.aud === "authenticated" ? (
-          <Avatar className="mr-[3%] ">
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+          <div className="flex items-center space-x-9 mr-7 ">
+            <ServiceButtonNav />
+            <Avatar className="">
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          </div>
         ) : (
           <div className="flex items-center space-x-5">
             <Button

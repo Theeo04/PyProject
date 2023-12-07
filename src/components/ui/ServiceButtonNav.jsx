@@ -23,7 +23,10 @@ function ServiceButtonNav() {
           <MenubarItem className="text-sm font-medium">
             Scan Your Recipe!
           </MenubarItem>
-          <MenubarItem className="text-sm font-medium">
+          <MenubarItem
+            className="text-sm font-medium"
+            onClick={() => router.push("/resumeapp")}
+          >
             Summarize Your Text!
           </MenubarItem>
         </MenubarContent>
