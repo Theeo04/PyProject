@@ -8,8 +8,11 @@ import {
   MenubarShortcut,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { useRouter } from "next/router";
 
 function ServiceButtonNav() {
+  const router = useRouter();
+
   return (
     <Menubar className=" rounded-xl hover:cursor-pointer ">
       <MenubarMenu>

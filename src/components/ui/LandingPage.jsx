@@ -27,7 +27,7 @@ function LandingPage() {
             revolutionizes your processes for streamlined operations.
           </p>
           <div className="mx-auto w-[50%]">
-            <Button className="w-full text-black bg-slate-200 mt-10">
+            <Button className="w-full text-black text-xl bg-slate-200 mt-14 md:text-3xl h-15">
               Start Now!
             </Button>
           </div>
