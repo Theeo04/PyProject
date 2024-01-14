@@ -20,7 +20,9 @@ function SwitchTabsScanning() {
   // Code for Scanning and resume =>
   const [imageUrl, setImageUrl] = useState("");
   const [result, setResult] = useState("");
+  // const [summary, setSummary] = useState("");
   const [summary, setSummary] = useState("");
+  const [num_sentences, setNumSentences] = useState(4);
 
   const handleImageUrlChange = (event) => {
     setImageUrl(event.target.value);
@@ -44,41 +46,44 @@ function SwitchTabsScanning() {
       setResult(data.text);
 
       // Summarize the text using the provided Axios code
-      await summarizeText(data.text);
+      await fetchSummary(); // Call fetchSummary directly
     } catch (error) {
       console.error("Error:", error.message);
     }
   };
 
+  console.log(result);
+  console.log(typeof result);
+
   //   Sum Text
   useEffect(() => {
-    const fetchSummary = async () => {
-      const encodedParams = new URLSearchParams();
-      encodedParams.set("text", result);
-      encodedParams.set("sentnum", "5");
-
+    const summarizeWithGPT3 = async () => {
       const options = {
         method: "POST",
-        url:
-          "https://textanalysis-text-summarization.p.rapidapi.com/text-summarizer-text",
+        url: "https://gpt-summarization.p.rapidapi.com/summarize",
         headers: {
-          "content-type": "application/x-www-form-urlencoded",
+          "content-type": "application/json",
           "X-RapidAPI-Key":
             "c2c48aefdcmshed838b91ca90f63p117b77jsnafb38f7168b1",
-          "X-RapidAPI-Host": "textanalysis-text-summarization.p.rapidapi.com",
+          "X-RapidAPI-Host": "gpt-summarization.p.rapidapi.com",
         },
-        data: encodedParams,
+        data: {
+          text: result,
+          num_sentences: 4,
+        },
       };
 
       try {
         const response = await axios.request(options);
-        setSummary(response.data);
+        console.log(response.data.summary);
+        setSummary(response.data.summary);
       } catch (error) {
         console.error(error);
+        setSummary("Error summarizing text");
       }
     };
 
-    fetchSummary();
+    summarizeWithGPT3();
   }, [result]);
 
   console.log(summary);
@@ -123,10 +128,7 @@ function SwitchTabsScanning() {
             </Button>
             <p className="pt-6 text-lg font-semibold">Your Resume:</p>
             <ScrollArea className="h-[200px] w-[100%] rounded-md border p-4">
-              {summary.sentences &&
-                summary.sentences.map((sentence, index) => (
-                  <p key={index}>{sentence}</p>
-                ))}
+              {summary !== "" ? <p>{summary}</p> : <p>No summary available</p>}
             </ScrollArea>
           </CardContent>
           <CardFooter>
